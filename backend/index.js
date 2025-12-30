@@ -6,7 +6,7 @@ require("dotenv").config();
 
 const app = express();
 app.use(cors({
-  origin: "*",
+  origin: ["https://fanmap-phi.vercel.app"],
   methods: ["GET","POST"],
   credentials: true
 }));
