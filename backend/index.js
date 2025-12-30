@@ -13,7 +13,11 @@ app.use(cors({
 
 app.use(express.json());
 
-mongoose.connect(process.env.MONGO_URI)
+mongoose.connect(process.env.MONGO_URI, {
+  family: 4,
+  serverSelectionTimeoutMS: 30000,
+  tls: true
+})
   .then(() => console.log("MongoDB Connected"))
   .catch(err => console.log(err));
 
