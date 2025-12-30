@@ -2,6 +2,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const cron = require("node-cron");
+const axios = require("axios");
+
 require("dotenv").config();
 
 const app = express();
@@ -145,10 +147,21 @@ app.get("/heat", async (req, res) => {
 app.post("/auth/start", async (req, res) => {
   const { phone } = req.body;
   const otp = Math.floor(100000 + Math.random()*900000).toString();
+
   await User.updateOne({ phone }, { phone, otp }, { upsert: true });
-  console.log("OTP:", otp); // (Later we connect SMS)
+
+  await axios.get(`https://www.fast2sms.com/dev/bulkV2`, {
+    params: {
+      authorization: process.env.FAST2SMS_API_KEY,
+      route: "otp",
+      variables_values: otp,
+      numbers: phone
+    }
+  });
+
   res.json({ success: true });
 });
+
 
 app.post("/auth/verify", async (req, res) => {
   const { phone, otp } = req.body;
