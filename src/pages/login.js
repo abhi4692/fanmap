@@ -9,13 +9,13 @@ export default function Login() {
   const router = useRouter();
 
   const sendOtp = async () => {
-    await axios.post("http://127.0.0.1:5000/auth/start", { phone });
+    await axios.post("https://fanmap-production.up.railway.app/auth/start", { phone });
     setStage(2);
     alert("OTP sent (check backend console for now)");
   };
 
   const verifyOtp = async () => {
-    const res = await axios.post("http://127.0.0.1:5000/auth/verify", { phone, otp });
+    const res = await axios.post("https://fanmap-production.up.railway.app/auth/verify", { phone, otp });
     localStorage.setItem("userId", res.data.userId);
     router.push("/");
   };

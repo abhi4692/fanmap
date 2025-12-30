@@ -5,7 +5,7 @@ export default function Leaderboard() {
   const [list, setList] = useState([]);
 
   useEffect(()=>{
-    axios.get("http://127.0.0.1:5000/leaderboard").then(r=>setList(r.data));
+    axios.get("https://fanmap-production.up.railway.app/leaderboard").then(r=>setList(r.data));
   },[]);
 
   return (

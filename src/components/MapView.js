@@ -14,13 +14,13 @@ export default function MapView({ pins }) {
       const anon = confirm("Join anonymously?");
       const userId = localStorage.getItem("userId");
 
-      await axios.post("http://127.0.0.1:5000/join", {
+      await axios.post("https://fanmap-production.up.railway.app/join", {
         pinId,
         user: anon ? "Anonymous" : userId,
         anonymous: anon
       });
 
-      const res = await axios.get(`http://127.0.0.1:5000/join/${pinId}`);
+      const res = await axios.get(`https://fanmap-production.up.railway.app/join/${pinId}`);
       const el = document.getElementById(`count-${pinId}`);
       if (el) el.innerText = res.data.count + " going";
     };
@@ -33,7 +33,7 @@ export default function MapView({ pins }) {
       const anon = confirm("Send anonymously?");
       const userId = localStorage.getItem("userId");
 
-      await axios.post("http://127.0.0.1:5000/chat", {
+      await axios.post("https://fanmap-production.up.railway.app/chat", {
         pinId,
         user: anon ? "Anonymous" : userId,
         message: input.value,
@@ -48,7 +48,7 @@ export default function MapView({ pins }) {
       const reporter = localStorage.getItem("userId");
       if(!targetUser || !reason) return;
 
-      await axios.post("http://127.0.0.1:5000/report", {
+      await axios.post("https://fanmap-production.up.railway.app/report", {
         targetUser,
         reporter,
         reason
@@ -58,7 +58,7 @@ export default function MapView({ pins }) {
 
 
     window.loadChat = async function(pinId) {
-      const res = await axios.get(`http://127.0.0.1:5000/chat/${pinId}`);
+      const res = await axios.get(`https://fanmap-production.up.railway.app/chat/${pinId}`);
       const box = document.getElementById(`chat-${pinId}`);
       if (!box) return;
 
@@ -70,7 +70,7 @@ export default function MapView({ pins }) {
       // 🔐 Fetch verified badge
       res.data.forEach(c => {
         if (!c.anonymous) {
-          axios.get(`http://127.0.0.1:5000/user/${c.user}`).then(r => {
+          axios.get(`https://fanmap-production.up.railway.app/user/${c.user}`).then(r => {
             if (r.data.verified) {
               const el = document.getElementById(`user-${c.user}`);
               if (el) el.innerText += " ✔";
@@ -88,7 +88,7 @@ export default function MapView({ pins }) {
     });
 
     map.on("load", () => {
-      axios.get("http://127.0.0.1:5000/heat").then(res => {
+      axios.get("https://fanmap-production.up.railway.app/heat").then(res => {
         map.addSource("heat", {
           type: "geojson",
           data: {
@@ -180,7 +180,7 @@ export default function MapView({ pins }) {
       if (link) linkTitle = prompt("What should this link be called?");
       const reason = prompt("Why should people meet? (optional)");
 
-      await axios.post("http://127.0.0.1:5000/pins", {
+      await axios.post("https://fanmap-production.up.railway.app/pins", {
         title,
         lat: e.lngLat.lat,
         lng: e.lngLat.lng,

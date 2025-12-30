@@ -14,7 +14,7 @@ export default function Home() {
       return;
     }
 
-    axios.get("http://127.0.0.1:5000/pins")
+    axios.get("https://fanmap-production.up.railway.app/pins")
       .then(res => setPins(res.data));
   }, []);
 

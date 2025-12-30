@@ -11,21 +11,21 @@ export default function MeetPage() {
   useEffect(() => {
     if (!id) return;
 
-    axios.get("http://127.0.0.1:5000/pins").then(res => {
+    axios.get("https://fanmap-production.up.railway.app/pins").then(res => {
       const p = res.data.find(x => x._id === id);
       setPin(p);
     });
 
-    axios.get(`http://127.0.0.1:5000/join/${id}`)
+    axios.get(`https://fanmap-production.up.railway.app/join/${id}`)
       .then(res => setCount(res.data.count));
   }, [id]);
 
   const join = async () => {
-    await axios.post("http://127.0.0.1:5000/join", {
+    await axios.post("https://fanmap-production.up.railway.app/join", {
       pinId: id,
       user: "guest"
     });
-    const res = await axios.get(`http://127.0.0.1:5000/join/${id}`);
+    const res = await axios.get(`https://fanmap-production.up.railway.app/join/${id}`);
     setCount(res.data.count);
   };
 

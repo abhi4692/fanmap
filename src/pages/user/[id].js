@@ -10,17 +10,17 @@ export default function Profile() {
 
   useEffect(()=>{
     if(!id) return;
-    axios.get(`http://127.0.0.1:5000/user/${id}`).then(r=>setUser(r.data));
-    axios.get(`http://127.0.0.1:5000/user/${id}/history`).then(r=>setHistory(r.data));
-    axios.get(`http://127.0.0.1:5000/follow/${id}`).then(r=>setFollowers(r.data.count));
+    axios.get(`https://fanmap-production.up.railway.app/user/${id}`).then(r=>setUser(r.data));
+    axios.get(`https://fanmap-production.up.railway.app/user/${id}/history`).then(r=>setHistory(r.data));
+    axios.get(`https://fanmap-production.up.railway.app/follow/${id}`).then(r=>setFollowers(r.data.count));
   },[id]);
 
   const follow = async () => {
-    await axios.post("http://127.0.0.1:5000/follow", {
+    await axios.post("https://fanmap-production.up.railway.app/follow", {
       follower: localStorage.getItem("userId"),
       following: id
     });
-    const r = await axios.get(`http://127.0.0.1:5000/follow/${id}`);
+    const r = await axios.get(`https://fanmap-production.up.railway.app/follow/${id}`);
     setFollowers(r.data.count);
   };
 
