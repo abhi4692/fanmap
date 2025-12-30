@@ -150,13 +150,11 @@ app.post("/auth/start", async (req, res) => {
 
   await User.updateOne({ phone }, { phone, otp }, { upsert: true });
 
-  await axios.get(`https://www.fast2sms.com/dev/bulkV2`, {
-    params: {
-      authorization: process.env.FAST2SMS_API_KEY,
-      route: "otp",
-      variables_values: otp,
-      numbers: phone
-    }
+  await axios.post("https://control.msg91.com/api/v5/otp", {
+    authkey: process.env.MSG91_KEY,
+    template_id: process.env.MSG91_TEMPLATE_ID,
+    mobile: phone,
+    otp
   });
 
   res.json({ success: true });
